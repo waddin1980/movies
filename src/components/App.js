@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import MoviesList from './MoviesList';
+import Header from './Header';
 
 class App extends React.Component {
   constructor(props) {
@@ -10,22 +11,27 @@ class App extends React.Component {
       movies: [], 
       genres: [], 
       rating: 3,
+      showMovie: true,
     }
   }
   
 
   componentDidMount(){
+    // create variables to hols api endpoints and sections
     const baseUrl = 'https://api.themoviedb.org/';
     const apiKey = 'api_key=cc28bf2af89434d1706a5f06b40b8379';
     const moviesPopular = 'movie/now_playing';
     const genres = 'genre/movie/list';
 
+    // Build the api urls to make requests to
     const moviesApi = `${baseUrl}3/${moviesPopular}?${apiKey}`;
     const genresApi = `${baseUrl}3/${genres}?${apiKey}`;
 
+    // Add the get requests  
     const requestMovies = axios.get(moviesApi);
     const requestGenres = axios.get(genresApi);
 
+    // Make multiple requests for the 2 data sets
     axios.all([requestMovies, requestGenres]).then(axios.spread((...responses) => {
       const responseOne = responses[0]
       const responseTwo = responses[1]
@@ -35,24 +41,34 @@ class App extends React.Component {
       const movies = responseOne.data.results;
       // Sort the movies by popularity
       const moviesSorted = movies.sort((a, b) => (a.popularity > b.popularity) ? -1 : 1)
-      // Add a new property to the objects in the list - an array for the genres
+      // Add a new property to the objects in the list to show / hide the movie
       moviesSorted.forEach(function (movie) {
         movie.show = true;
       });
 
-      console.log(moviesSorted);
+      console.log(moviesSorted, responseTwo.data.genres);
 
+      // Add the api data to the app state
       this.setState({movies:moviesSorted, genres:responseTwo.data.genres})
       })).catch(errors => {
       console.log(errors);
     })
   }
 
-  
+  onChange =  () => {
+    this.setState({ rating: this.props.rating });
+    console.log(this.state.rating);
+  }
 
   render() {
+
     return (
-      <MoviesList movies={this.state.movies} />
+      <React.Fragment>
+        <Header rating={this.state.rating} onChange={this.props.onChange} />
+      <main>
+        <MoviesList movies={this.state.movies} genres={this.state.genres} />
+      </main>
+      </React.Fragment>
     )
   }
 }
