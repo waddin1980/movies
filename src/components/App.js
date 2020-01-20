@@ -69,7 +69,7 @@ class App extends React.Component {
       <React.Fragment>
         <header>
           <h1>bb</h1>
-          <input
+          <input 
             type="range"
             min="1" max="10"
             className="slider"
@@ -79,7 +79,7 @@ class App extends React.Component {
           />
         </header>
       <main>
-        <MoviesList movies={this.state.movies} genres={this.state.genres} />
+        <MoviesList movies={this.state.movies} rating={this.state.rating} genres={this.state.genres} />
       </main>
       </React.Fragment>
     )
