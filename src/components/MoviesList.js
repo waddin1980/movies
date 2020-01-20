@@ -10,9 +10,9 @@ const MoviesList = props => {
 
                 <MovieCard 
                     key={movie.id} 
-                    title={movie.title} 
-                    image={movie.poster_path}
-                    rating={movie.vote_average}
+                   // title={movie.title} 
+                   // image={movie.poster_path}
+                   // rating={movie.vote_average}
                 />
 
                 )

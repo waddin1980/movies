@@ -8,7 +8,14 @@ class Header extends React.Component {
         return(
         <header>
             <h1>Movies</h1>
-            <Slider rating={this.props.rating} />
+                <input
+                    type="range"
+                    min="1" max="10"
+                    value="3"
+                    className="slider"
+                    step="0.5"
+                    onChange={e => ({ rating: e.target.value })}
+                />
             <Checkbox />
         </header>
         )

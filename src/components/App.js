@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from 'axios';
 import MoviesList from './MoviesList';
-import Header from './Header';
 
 class App extends React.Component {
   constructor(props) {
@@ -55,16 +54,30 @@ class App extends React.Component {
     })
   }
 
-  onChange =  () => {
-    this.setState({ rating: this.props.rating });
-    console.log(this.state.rating);
+  handleChange =  (event) => {
+    this.setState({
+      rating: event.currentTarget.value
+    }, () => { // arrow function, ES2015
+      console.log(this.state.rating);
+      // call this.props.onUserInput(this.state.value)
+    });
   }
 
   render() {
 
     return (
       <React.Fragment>
-        <Header rating={this.state.rating} onChange={this.props.onChange} />
+        <header>
+          <h1>bb</h1>
+          <input
+            type="range"
+            min="1" max="10"
+            className="slider"
+            value={this.state.rating}
+            step="0.5"
+            onChange={this.handleChange}
+          />
+        </header>
       <main>
         <MoviesList movies={this.state.movies} genres={this.state.genres} />
       </main>
