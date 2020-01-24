@@ -7,10 +7,9 @@ class App extends React.Component {
     super(props);
 
     this.state = { 
-      movies: [], 
-      genres: [], 
-      rating: 3,
-      showMovie: true,
+      movies: [],
+      genres: [],
+      rating: 3
     }
   }
   
@@ -32,23 +31,22 @@ class App extends React.Component {
 
     // Make multiple requests for the 2 data sets
     axios.all([requestMovies, requestGenres]).then(axios.spread((...responses) => {
-      const responseOne = responses[0]
-      const responseTwo = responses[1]
+      const moviesApi = responses[0].data.results
+      const genresApi = responses[1].data.genres
 
-
-      // Drill down to the actual data in the response;
-      const movies = responseOne.data.results;
       // Sort the movies by popularity
-      const moviesSorted = movies.sort((a, b) => (a.popularity > b.popularity) ? -1 : 1)
-      // Add a new property to the objects in the list to show / hide the movie
+      const moviesSorted = moviesApi.sort((a, b) => (a.popularity > b.popularity) ? -1 : 1)
+      // Add the genres to the movieSorted list
       moviesSorted.forEach(function (movie) {
-        movie.show = true;
+        
+        let genreIds = movie.genre_ids;
+        
+        const genreMatch = genresApi.filter(x => genreIds.includes(Number(x.id)))
+        movie.genres = genreMatch;
       });
 
-      console.log(moviesSorted, responseTwo.data.genres);
-
-      // Add the api data to the app state
-      this.setState({movies:moviesSorted, genres:responseTwo.data.genres})
+      // Add the sorted data to the app state
+      this.setState({ movies: moviesSorted, genres: genresApi})
       })).catch(errors => {
       console.log(errors);
     })
@@ -58,7 +56,7 @@ class App extends React.Component {
     this.setState({
       rating: event.currentTarget.value
     }, () => { // arrow function, ES2015
-      console.log(this.state.rating);
+      //console.log(this.state.rating);
       // call this.props.onUserInput(this.state.value)
     });
   }
@@ -69,14 +67,17 @@ class App extends React.Component {
       <React.Fragment>
         <header>
           <h1>bb</h1>
-          <input 
-            type="range"
-            min="1" max="10"
-            className="slider"
-            value={this.state.rating}
-            step="0.5"
-            onChange={this.handleChange}
-          />
+          <div className="range-slider">
+            <input 
+              type="range"
+              min="1" max="10"
+              id="slider"
+              value={this.state.rating}
+              step="0.5"
+              onChange={this.handleChange}
+            />
+            <span>{this.state.rating}</span>
+          </div>
         </header>
       <main>
         <MoviesList movies={this.state.movies} rating={this.state.rating} genres={this.state.genres} />
