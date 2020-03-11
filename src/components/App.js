@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import MoviesList from './MoviesList';
+import './App.scss';
 
 class App extends React.Component {
   constructor(props) {
@@ -8,14 +9,13 @@ class App extends React.Component {
 
     this.state = { 
       movies: [],
-      genres: [],
       rating: 3
     }
   }
   
 
   componentDidMount(){
-    // create variables to hols api endpoints and sections
+    // create variables to hold api endpoints and sections
     const baseUrl = 'https://api.themoviedb.org/';
     const apiKey = 'api_key=cc28bf2af89434d1706a5f06b40b8379';
     const moviesPopular = 'movie/now_playing';
@@ -29,14 +29,15 @@ class App extends React.Component {
     const requestMovies = axios.get(moviesApi);
     const requestGenres = axios.get(genresApi);
 
-    // Make multiple requests for the 2 data sets
+    // Make requests for the 2 data sets
     axios.all([requestMovies, requestGenres]).then(axios.spread((...responses) => {
       const moviesApi = responses[0].data.results
       const genresApi = responses[1].data.genres
 
       // Sort the movies by popularity
       const moviesSorted = moviesApi.sort((a, b) => (a.popularity > b.popularity) ? -1 : 1)
-      // Add the genres to the movieSorted list
+      
+      // Add the genre names to the movieSorted list
       moviesSorted.forEach(function (movie) {
         
         let genreIds = movie.genre_ids;
@@ -45,45 +46,48 @@ class App extends React.Component {
         movie.genres = genreMatch;
       });
 
-      // Add the sorted data to the app state
-      this.setState({ movies: moviesSorted, genres: genresApi})
+      // Add the sorted movies with the genre names to the app state
+      this.setState({ movies: moviesSorted })
       })).catch(errors => {
       console.log(errors);
     })
   }
 
+  // Handle the slider changes and update the rating state accordingly
   handleChange =  (event) => {
     this.setState({
       rating: event.currentTarget.value
-    }, () => { // arrow function, ES2015
-      //console.log(this.state.rating);
-      // call this.props.onUserInput(this.state.value)
     });
   }
 
   render() {
 
     return (
-      <React.Fragment>
-        <header>
-          <h1>bb</h1>
-          <div className="range-slider">
-            <input 
-              type="range"
-              min="1" max="10"
-              id="slider"
-              value={this.state.rating}
-              step="0.5"
-              onChange={this.handleChange}
-            />
-            <span>{this.state.rating}</span>
-          </div>
-        </header>
-      <main>
-        <MoviesList movies={this.state.movies} rating={this.state.rating} genres={this.state.genres} />
-      </main>
-      </React.Fragment>
-    )
+			<React.Fragment>
+				<header>
+					<h1>Main title</h1>
+					<div className="range-slider">
+						<input
+							type="range"
+							min="1"
+							max="10"
+							id="slider"
+							value={this.state.rating}
+							step="0.5"
+							onChange={this.handleChange}
+						/>
+						<span>{this.state.rating}</span>
+					</div>
+				</header>
+				<main>
+						<MoviesList
+							movies={this.state.movies}
+							rating={this.state.rating}
+							genres={this.state.genres}
+						/>
+				</main>
+			</React.Fragment>
+		);
   }
 }
 
