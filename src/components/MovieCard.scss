@@ -39,6 +39,19 @@
 @media only screen and (min-width: 768px) {
     .movie-card {
         width: 33.33%;
+        &__info {
+            opacity: 0;
+            transition: all .3s ease;
+        }
+        &:hover {
+            .movie-card__image {
+                opacity: .6;
+                transition: all .3s ease;
+            }
+            .movie-card__info {
+                opacity: 1;
+            }
+        }
     }
 }
 

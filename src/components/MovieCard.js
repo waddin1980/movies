@@ -25,8 +25,10 @@ class MovieCard extends React.Component {
 									src={"https://image.tmdb.org/t/p/w500" + this.props.image}
 									alt={this.props.title}
 								/>
-								<h2 className="movie-card__title">{this.props.title}</h2>
-								<ul className="movie-card__genres">{this.props.genres}</ul>
+								<div className="movie-card__info">
+									<h2 className="movie-card__title">{this.props.title}</h2>
+									<ul className="movie-card__genres">{this.props.genres}</ul>
+								</div>
 							</li>
 						);
         }
