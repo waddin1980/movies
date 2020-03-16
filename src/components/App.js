@@ -10,6 +10,7 @@ class App extends React.Component {
     this.state = { 
       movies: [],
       genres:[],
+      genresFiltered: [], 
       rating: 3
     }
   }
@@ -46,13 +47,14 @@ class App extends React.Component {
         const genreMatch = genresApi.filter(x => genreIds.includes(Number(x.id)))
         movie.genres = genreMatch;
 
+        movie.visibilty = "show";
+
       });
       // Add the sorted movies with the genre names to the app state
       this.setState({ movies: moviesSorted })
       
       // Add genres to the app state
-      //this.setState({ genres: genresApi })
-
+      this.setState({ genres: genresApi })
 
       })).catch(errors => {
       console.log(errors);
@@ -66,7 +68,14 @@ class App extends React.Component {
     });
   }
 
+  genreCheckbox = (event) => {
+    console.log(event.target.checked, event.target.value);
+    
+  }
+
   render() {
+
+    const genres = this.state.genres;
 
     return (
 			<React.Fragment>
@@ -84,6 +93,18 @@ class App extends React.Component {
 						/>
 						<span>{this.state.rating}</span>
 					</div>
+          <div className="genre-picker">
+            <ul>
+              {genres.map((value, index) => {
+                return ( 
+                  <li key={index}>
+                    <input type="checkbox" value={value.name} id={value.name} onChange={this.genreCheckbox} />
+                    <label htmlFor={value.name}>{value.name}</label>
+                  </li>
+                )
+              })}
+            </ul>
+          </div>
 				</header>
 				<main>
 						<MoviesList
