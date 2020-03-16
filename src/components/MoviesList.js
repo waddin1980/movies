@@ -5,7 +5,7 @@ import './MoviesList.scss';
 const MoviesList = props => {
 		
 		// Create a movie list by filtering any movies 
-		const movie = props.movies.filter(movie => movie.vote_average > props.rating).map(movie => {
+		const movie = props.movies.filter(movie => movie.vote_average > props.rating && movie.visibility === "show").map(movie => {
 
 			const genres = movie.genres;
             const genreList = []

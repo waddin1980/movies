@@ -26,7 +26,7 @@ class MovieCard extends React.Component {
 									alt={this.props.title}
 								/>
 								<div className="movie-card__info">
-									<h2 className="movie-card__title">{this.props.title}</h2>
+									<h2 className="movie-card__title">{this.props.title.toUpperCase()}</h2>
 									<ul className="movie-card__genres">{this.props.genres}</ul>
 								</div>
 							</li>

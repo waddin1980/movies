@@ -7,10 +7,10 @@ class App extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { 
+    this.state = {
       movies: [],
-      genres:[],
-      genresFiltered: [], 
+      genres: [],
+      genreFilter: [],
       rating: 3
     }
   }
@@ -47,7 +47,7 @@ class App extends React.Component {
         const genreMatch = genresApi.filter(x => genreIds.includes(Number(x.id)))
         movie.genres = genreMatch;
 
-        movie.visibilty = "show";
+        movie.visibility = "show";
 
       });
       // Add the sorted movies with the genre names to the app state
@@ -69,7 +69,19 @@ class App extends React.Component {
   }
 
   genreCheckbox = (event) => {
-    console.log(event.target.checked, event.target.value);
+    //console.log(event.target.checked, event.target.value);
+
+    this.setState({ genreFilter: event.target.value })
+    
+    console.log(this.state.genreFilter);
+
+    // this.state.movies.forEach(function (movie) {
+    //   if (event.target.value !== movie.genres.name) {
+    //     movie.visibility = "Hide";
+    //   }
+
+    // });
+
     
   }
 
