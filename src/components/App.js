@@ -9,6 +9,7 @@ class App extends React.Component {
 
     this.state = { 
       movies: [],
+      genres:[],
       rating: 3
     }
   }
@@ -44,10 +45,15 @@ class App extends React.Component {
         
         const genreMatch = genresApi.filter(x => genreIds.includes(Number(x.id)))
         movie.genres = genreMatch;
-      });
 
+      });
       // Add the sorted movies with the genre names to the app state
       this.setState({ movies: moviesSorted })
+      
+      // Add genres to the app state
+      //this.setState({ genres: genresApi })
+
+
       })).catch(errors => {
       console.log(errors);
     })

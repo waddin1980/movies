@@ -12,7 +12,7 @@ const MoviesList = props => {
 
 			for (const [index, value] of genres.entries()) {
 				genreList.push(
-					<li class="movie-card__genre" key={index}>
+					<li className="movie-card__genre" key={index}>
 						{value.name}
 					</li>
 				);

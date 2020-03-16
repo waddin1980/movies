@@ -7,8 +7,8 @@ class MovieCard extends React.Component {
 
             return (
 							<li className="movie-card">
-								{/* 
-								<img
+								
+								{/* <img
 									className="movie-card__image"
 									src="https://via.placeholder.com/500"
 									alt={this.props.title}
