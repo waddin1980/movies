@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import MoviesList from './MoviesList';
+import Slider from './Slider';
 import './App.scss';
 
 class App extends React.Component {
@@ -66,6 +67,7 @@ class App extends React.Component {
     this.setState({
       rating: event.currentTarget.value
     });
+    console.log(event.currentTarget.value);
   }
 
   genreCheckbox = (event) => {
@@ -93,7 +95,10 @@ class App extends React.Component {
 			<React.Fragment>
 				<header>
 					<h1>Main title</h1>
-					<div className="range-slider">
+          <Slider 
+            value={this.state.rating}
+          />
+					{/* <div className="range-slider">
 						<input
 							type="range"
 							min="1"
@@ -104,26 +109,31 @@ class App extends React.Component {
 							onChange={this.handleChange}
 						/>
 						<span>{this.state.rating}</span>
+					</div> */}
+					<div className="genre-picker">
+						<ul>
+							{genres.map((value, index) => {
+								return (
+									<li key={index}>
+										<input
+											type="checkbox"
+											value={value.name}
+											id={value.name}
+											onChange={this.genreCheckbox}
+										/>
+										<label htmlFor={value.name}>{value.name}</label>
+									</li>
+								);
+							})}
+						</ul>
 					</div>
-          <div className="genre-picker">
-            <ul>
-              {genres.map((value, index) => {
-                return ( 
-                  <li key={index}>
-                    <input type="checkbox" value={value.name} id={value.name} onChange={this.genreCheckbox} />
-                    <label htmlFor={value.name}>{value.name}</label>
-                  </li>
-                )
-              })}
-            </ul>
-          </div>
 				</header>
 				<main>
-						<MoviesList
-							movies={this.state.movies}
-							rating={this.state.rating}
-							genres={this.state.genres}
-						/>
+					<MoviesList
+						movies={this.state.movies}
+						rating={this.state.rating}
+						genres={this.state.genres}
+					/>
 				</main>
 			</React.Fragment>
 		);
