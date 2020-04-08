@@ -12,8 +12,6 @@ class App extends React.Component {
 		this.state = {
 		movies: [],
 		genres:[],
-		genresCheckboxes: [],
-		genreFilter: [],
 		rating: 3
 		}
 	}
@@ -57,17 +55,12 @@ class App extends React.Component {
 				movie.genres = genreMatch;
 				
 				for (const genre of movie.genres) {
-					genreList.push(genre.name);
+					genreList.push(genre.name && genre.id);
 				}
 
 				movie.visibility = true;
 
 		});	
-
-
-		// Add the unique genres to the genre filter by creating a unique set and sorting it
-		const uniqueGenres = new Set (genreList.sort());
-		this.setState({ genresCheckboxes: uniqueGenres})
 
 		// Add the sorted movies with the genre names to the app state
 		this.setState({ movies: moviesSorted })
@@ -95,11 +88,12 @@ class App extends React.Component {
 			// TODO: Change the genresCheckboxes so that it includes the genre.id
 			const genresFiltered = initialState.filter(
 				(movies) =>
-					movies.genre_ids.includes(parseInt(28))
+					movies.genre_ids.includes(parseInt(event.target.value))
 			);
-
-			console.log(genresFiltered);
-		}
+			this.setState({
+				movies: genresFiltered
+			})
+		} 
 	}
 	
 
@@ -112,10 +106,12 @@ class App extends React.Component {
 							rating={this.state.rating}
 							handleChange={this.handleChange}
 						/>
-						<GenreFilter 
-						genres={this.state.genresCheckboxes}
+						<GenreFilter
+							genres={this.state.genres}
 							handleGenreCheckboxes={this.handleGenreCheckboxes}
+							movies={this.state.movies}
 						/>
+
 				</header>
 					<MoviesList
 						movies={this.state.movies}
