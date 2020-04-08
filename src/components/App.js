@@ -42,9 +42,6 @@ class App extends React.Component {
 
 			// Sort the movies by popularity
 			const moviesSorted = moviesApi.sort((a, b) => (a.popularity > b.popularity) ? -1 : 1)
-			
-			// Initiate a genre list array in order to create the unique genre filter
-			let genreList = []
 
 			// Add the genre names to the movieSorted list
 			moviesSorted.forEach(function (movie) {
@@ -53,10 +50,6 @@ class App extends React.Component {
 				
 				const genreMatch = genresApi.filter(genre => genreIds.includes(Number(genre.id)))
 				movie.genres = genreMatch;
-				
-				for (const genre of movie.genres) {
-					genreList.push(genre.name && genre.id);
-				}
 
 		});	
 

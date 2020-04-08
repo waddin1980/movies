@@ -4,7 +4,7 @@ const GenreFilter = props => {
     // Make a new array of the current genre ids on the page
     const filtered = props.movies.map(movie => movie.genre_ids).flat();
 
-    // Filter to remove any genres not on the page with the cuurent movies
+    // Filter to remove any genres not on the page with the current movies
     const filteredGenres = props.genres.filter(genre => filtered.includes(Number(genre.id)))
 
 
