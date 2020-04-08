@@ -89,11 +89,14 @@ class App extends React.Component {
 	handleGenreCheckboxes = (event) => {
 		if (event.target.checked) {
 			// new array if genreIds match genres from api.
-		
+
 			const initialState = [...this.state.movies];
 
-			
-			const genresFiltered = initialState.filter(movies => movies.genre_ids.includes(parseInt(28)));
+			// TODO: Change the genresCheckboxes so that it includes the genre.id
+			const genresFiltered = initialState.filter(
+				(movies) =>
+					movies.genre_ids.includes(parseInt(28))
+			);
 
 			console.log(genresFiltered);
 		}
