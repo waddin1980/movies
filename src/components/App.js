@@ -51,7 +51,7 @@ class App extends React.Component {
 				
 				let genreIds = movie.genre_ids;
 				
-				const genreMatch = genresApi.filter(x => genreIds.includes(Number(x.id)))
+				const genreMatch = genresApi.filter(genre => genreIds.includes(Number(genre.id)))
 				movie.genres = genreMatch;
 				
 				for (const genre of movie.genres) {

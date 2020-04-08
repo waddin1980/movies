@@ -1,8 +1,14 @@
 import React from 'react';
 
 const GenreFilter = props => {
+    // Make a new array of the current genre ids on the page
+    const filtered = props.movies.map(movie => movie.genre_ids).flat();
 
-    const genre = props.genres.map(genre => {
+    // Filter to remove any genres not on the page with the cuurent movies
+    const filteredGenres = props.genres.filter(genre => filtered.includes(Number(genre.id)))
+
+
+    const genre = filteredGenres.map(genre => {
         return(
             <li key={genre.name}>
                 <input 
