@@ -58,8 +58,6 @@ class App extends React.Component {
 					genreList.push(genre.name && genre.id);
 				}
 
-				movie.visibility = true;
-
 		});	
 
 		// Add the sorted movies with the genre names to the app state
@@ -93,7 +91,8 @@ class App extends React.Component {
 			this.setState({
 				movies: genresFiltered
 			})
-		} 
+		
+		}
 	}
 	
 
