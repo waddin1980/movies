@@ -11,7 +11,8 @@ class App extends React.Component {
 
 		this.state = {
 		movies: [],
-		genres:[],
+		genres: [],
+		genresFiltered: [],
 		rating: 3
 		}
 	}
@@ -71,24 +72,27 @@ class App extends React.Component {
 	
 
 	handleGenreCheckboxes = (event) => {
-		if (event.target.checked) {
-			// New array used to match up checkbox ids with genre ids
-			const initialState = [...this.state.movies];
+		// New array used to match up checkbox ids with genre ids
+		const initialState = [...this.state.movies];
 
-			// TODO: Change the genresCheckboxes so that it includes the genre.id
+		if (event.target.checked) {
+
+			// Filter the movies list to exclude genreIds that don't match
 			const genresFiltered = initialState.filter(
 				(movies) =>
 					movies.genre_ids.includes(parseInt(event.target.value))
 			);
 			this.setState({
-				movies: genresFiltered
+				genresFiltered: genresFiltered
 			})
-		
+		} else if (!event.target.checked) {
+			console.log('unchecked');
 		}
 	}
 	
 
 	render() {
+		console.log(this.state.genresFiltered);
 		return (			
 			<>
 				<header>
