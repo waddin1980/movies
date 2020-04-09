@@ -6,6 +6,7 @@ const MoviesList = props => {
 		
 	// Create a movie list by filtering any movies 
 	const movie = props.movies.filter(movie => movie.vote_average > props.rating).map(movie => {
+
 		// Add the genres to each movie card. 
 		const genres = movie.genres;
 		const genreList = [];
