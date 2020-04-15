@@ -52,7 +52,7 @@ class App extends React.Component {
 				const genreMatch = genresApi.filter(genre => genreIds.includes(Number(genre.id)))
 				movie.genres = genreMatch;
 
-		});	
+			});	
 
 		// Add the sorted movies with the genre names to the app state
 		this.setState({ movies: moviesSorted })
